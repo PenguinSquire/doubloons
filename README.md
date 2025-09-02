@@ -5,11 +5,9 @@ non-breaking space for indentation: ' '
 -->
 
 
-# Palladium  
-A discord bot that natively embeds images and videos in discord from a variety of sources by utilizing the [Cobalt API](https://github.com/imputnet/cobalt/tree/main)
+# Narwhal's Doubloons  
+A discord bot that narwhal doubloons
 
-      initially a re-implementation of the [Cobalt Downloader](https://discord.com/application-directory/1093352359989612627)  discord bot (unaffiliated with Cobalt API)  
-  
 ## Setup
 - you need to create `config.json` file containing the following code:  
 ```
