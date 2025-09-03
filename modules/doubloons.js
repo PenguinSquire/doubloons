@@ -1,6 +1,7 @@
 const fs = require("fs");
 
 module.exports = {
+	doubloonEmoji: '<a:doubloon:1412936048660447373>',
 
 	editDoubloons: function (userID, amount) {
 		let coins = JSON.parse(fs.readFileSync('./coins.json', 'utf8'));
@@ -17,6 +18,9 @@ module.exports = {
 
 	viewDoubloons: function (userID) {
 		let coins = JSON.parse(fs.readFileSync('./coins.json', 'utf8'));
+		if (userID === undefined) {
+			return coins;
+		}
 		if (!coins[userID]) {
 			return (0);
 		}
