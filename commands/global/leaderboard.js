@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { viewDoubloons, doubloonEmoji } = require('../../modules/doubloons');
 
 function pad(num, pad = 2) {
-	return String(num).padStart(pad, "  ")
+	return String(num).padStart(pad, ' ')
 }
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,10 +16,10 @@ module.exports = {
 		const coins = Object.entries(viewDoubloons())
 
         // Format top 10
-        let top10 = coins.slice(0, 10);
+        let top50 = coins.slice(0, 50);
 
         let leaderboard = await Promise.all(
-            top10.map(async ([userId, amount], index) => {
+            top50.map(async ([userId, amount], index) => {
                 try {
                     const user = await interaction.client.users.fetch(userId);
                     return `**[${pad(index + 1)}.]** ${user.globalName}: ${doubloonEmoji} ${amount.doubloons.toLocaleString('en-US')}`;
