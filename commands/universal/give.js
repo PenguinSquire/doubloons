@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { altUserID, myUserID } = require('../../config.json');
 const fs = require("fs");
-const { editDoubloons, viewDoubloons } = require("../../modules/doubloons.js");
+const { editDoubloons, viewDoubloons, sortDoubloons } = require("../../modules/doubloons.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -26,10 +26,10 @@ module.exports = {
 
         if (interaction.user.id.toString() != myUserID) {
             editDoubloons(interaction.user.id, -1);
-            await interaction.editReply(reply);
-            return;
+        } else {
+            editDoubloons(username.id, amount);
         }
-        editDoubloons(username.id, amount);
         await interaction.editReply(reply);
+        sortDoubloons();
     },
 };

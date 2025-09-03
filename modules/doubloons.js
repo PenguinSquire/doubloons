@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 module.exports = {
 
 	editDoubloons: function (userID, amount) {
@@ -20,4 +22,16 @@ module.exports = {
 		}
 		return coins[userID].doubloons;
 	},
+	sortDoubloons: function () {
+		let coins = JSON.parse(fs.readFileSync('./coins.json', 'utf8'));
+
+		let sortedObject = Object.entries(coins) //SORT IT (idk how this works)
+			.sort((a, b) => b[1].doubloons - a[1].doubloons);
+
+		let sortedObj = Object.fromEntries(sortedObject); //shove it back in the array
+
+		fs.writeFile('./coins.json', JSON.stringify(sortedObj), (err) => {
+			if (err) console.error(err)
+		});
+	}
 } 
