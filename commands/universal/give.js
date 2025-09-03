@@ -10,10 +10,18 @@ function editdoubloons(userID, amount) {
         };
     }
     coins[userID].doubloons += amount;
-    
+
     fs.writeFile('./coins.json', JSON.stringify(coins), (err) => {
         if (err) console.error(err)
     });
+    return coins[userID].doubloons;
+}
+
+function viewdoubloons(userID) {
+    let coins = JSON.parse(fs.readFileSync('./coins.json', 'utf8'));
+    if (!coins[userID]) {
+        return (0);
+    }
     return coins[userID].doubloons;
 }
 
@@ -33,17 +41,17 @@ module.exports = {
         await interaction.deferReply();
         const username = interaction.options.getUser('username');
         const amount = interaction.options.getInteger('amount');
-        let reply=`You have added ${amount.toLocaleString('en-US')} doubloons to ${username}! They now have `
+        let reply = `You have added ${amount.toLocaleString('en-US')} doubloons to ${username}!`
         if (amount < 0) {
-            reply=`You have removed ${Math.abs(amount).toLocaleString('en-US')} doubloons from ${username}! They now have `
+            reply = `You have removed ${Math.abs(amount).toLocaleString('en-US')} doubloons from ${username}!`
         }
 
-        if (interaction.user.id.toString() != myUserID && interaction.user.id.toString() != altUserID) {
-            
-            await interaction.editReply(reply + editdoubloons(username.id, -1).toLocaleString('en-US'));
+        if (interaction.user.id.toString() != myUserID) {
+            editdoubloons(interaction.user.id, -1);
+            await interaction.editReply(reply);
             return;
         }
-
-        await interaction.editReply(reply + editdoubloons(username.id, amount).toLocaleString('en-US'));
+        editdoubloons(username.id, amount);
+        await interaction.editReply(reply);
     },
 };

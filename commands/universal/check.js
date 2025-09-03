@@ -24,9 +24,10 @@ module.exports = {
         const amount = viewdoubloons(username.id).toLocaleString('en-US');
         let reply = `You currently have ${amount} doubloons.`
         if (interaction.user.id.toString() != username.id) {
-            reply = (`${username.globalName} currently has ${amount} doubloons.`);
+            reply = (`${username.globalName ?? username.username} currently has ${amount} doubloons.`);
 
         }
+
         await interaction.editReply(reply);
         console.log(interaction.user);
 
