@@ -1,29 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { altUserID, myUserID } = require('../../config.json');
 const fs = require("fs");
-
-function editdoubloons(userID, amount) {
-    let coins = JSON.parse(fs.readFileSync('./coins.json', 'utf8'));
-    if (!coins[userID]) {
-        coins[userID] = {
-            doubloons: 0,
-        };
-    }
-    coins[userID].doubloons += amount;
-
-    fs.writeFile('./coins.json', JSON.stringify(coins), (err) => {
-        if (err) console.error(err)
-    });
-    return coins[userID].doubloons;
-}
-
-function viewdoubloons(userID) {
-    let coins = JSON.parse(fs.readFileSync('./coins.json', 'utf8'));
-    if (!coins[userID]) {
-        return (0);
-    }
-    return coins[userID].doubloons;
-}
+const { editDoubloons, viewDoubloons } = require("../../modules/doubloons.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -47,11 +25,11 @@ module.exports = {
         }
 
         if (interaction.user.id.toString() != myUserID) {
-            editdoubloons(interaction.user.id, -1);
+            editDoubloons(interaction.user.id, -1);
             await interaction.editReply(reply);
             return;
         }
-        editdoubloons(username.id, amount);
+        editDoubloons(username.id, amount);
         await interaction.editReply(reply);
     },
 };
