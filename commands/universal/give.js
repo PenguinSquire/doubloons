@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { altUserID, myUserID } = require('../../config.json');
 const fs = require("fs");
-const { editDoubloons, viewDoubloons, sortDoubloons } = require("../../modules/doubloons.js");
+const { editDoubloons, viewDoubloons, sortDoubloons, doubloonEmoji } = require("../../modules/doubloons.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,9 +19,9 @@ module.exports = {
         await interaction.deferReply();
         const username = interaction.options.getUser('username');
         const amount = interaction.options.getInteger('amount');
-        let reply = `You have added ${amount.toLocaleString('en-US')} doubloons to ${username}!`
+        let reply = `You have added ${doubloonEmoji} ${amount.toLocaleString('en-US')} doubloons to ${username}!`
         if (amount < 0) {
-            reply = `You have removed ${Math.abs(amount).toLocaleString('en-US')} doubloons from ${username}!`
+            reply = `You have removed ${doubloonEmoji} ${Math.abs(amount).toLocaleString('en-US')} doubloons from ${username}!`
         }
 
         if (interaction.user.id.toString() != myUserID) {
